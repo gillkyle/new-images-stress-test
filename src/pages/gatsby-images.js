@@ -190,18 +190,18 @@ export default function GatsbyImages() {
       <h2>
         <pre>Fixed</pre>
       </h2>
-      <TestCase title="Fixed with width (120x___)" looksCorrect={false}>
+      <TestCase title="Fixed with width (120x___)" looksCorrect={true}>
         <GatsbyImage image={getImage(data.fixedWidth)} alt="chameleon" />
         <Img fixed={data.fixedWidth.childImageSharp.fixed} alt="chameleon" />
       </TestCase>
-      <TestCase title="Fixed with height (___x80)" looksCorrect={false}>
+      <TestCase title="Fixed with height (___x80)" looksCorrect={true}>
         <GatsbyImage image={getImage(data.fixedHeight)} alt="chameleon" />
         <Img fixed={data.fixedHeight.childImageSharp.fixed} alt="chameleon" />
       </TestCase>
       <h2>
         <pre>Fluid</pre>
       </h2>
-      <TestCase title="Fluid with maxWidth (240x___)" looksCorrect={false} notes="Looks like cropFocus is different by default on legacy gatsby-image, maybe that's intentional?">
+      <TestCase title="Fluid with maxWidth (240x___)" looksCorrect={true} >
         <div style={{ display: `grid`, gridTemplateColumns: `240px 240px` }}>
             <GatsbyImage image={getImage(data.fluidWidth)} alt="chameleon" />
             <Img fixed={data.fluidWidth.childImageSharp.fluid} alt="chameleon" />
