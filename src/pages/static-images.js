@@ -17,7 +17,7 @@ export default function StaticImages() {
         <img alt="Chameleon" height={200} src={ChameleonPortrait} />
       </div>
       <hr />
-      <TestCase title="No layout or size set (___x___)" looksCorrect={true}>
+      <TestCase title="No layout or size set (___x___)" notes="Nothing expected to render" looksCorrect={true}>
         <StaticImage src="../img/600x400.png" alt="600x400" />
       </TestCase>
       <h2>

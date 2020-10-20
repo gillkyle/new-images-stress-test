@@ -2,6 +2,7 @@ import React from "react"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { useStaticQuery, graphql } from "gatsby"
 
+import Img from "../components/legacy-gatsby-image"
 import TestCase from "../components/test-case"
 import ChameleonLandscape from "../img/landscape.jpg"
 import ChameleonPortrait from "../img/portrait.jpg"
@@ -11,34 +12,49 @@ export default function GatsbyImages() {
     query GatsbyImagesQuery {
       fixedWidth: file(relativePath: { eq: "landscape.jpg" }) {
         childImageSharp {
-          gatsbyImage(width: 120, layout: FIXED, placeholder: TRACED_SVG) {
+          fixed(width: 120) {
+            ...GatsbyImageSharpFixed
+          }
+          gatsbyImage(width: 120, layout: FIXED) {
             imageData
           }
         }
       }
       fixedHeight: file(relativePath: { eq: "landscape.jpg" }) {
         childImageSharp {
-          gatsbyImage(height: 80, layout: FIXED, placeholder: TRACED_SVG) {
+          fixed(height: 80) {
+            ...GatsbyImageSharpFixed
+          }
+          gatsbyImage(height: 80, layout: FIXED) {
             imageData
           }
         }
       }
       fluidWidth: file(relativePath: { eq: "landscape.jpg" }) {
         childImageSharp {
-          gatsbyImage(maxWidth: 240, layout: FLUID, placeholder: TRACED_SVG) {
+          fluid(maxWidth: 240) {
+            ...GatsbyImageSharpFluid
+          }
+          gatsbyImage(maxWidth: 240, layout: FLUID) {
             imageData
           }
         }
       }
       fluidHeight: file(relativePath: { eq: "landscape.jpg" }) {
         childImageSharp {
-          gatsbyImage(maxHeight: 160, layout: FLUID, placeholder: TRACED_SVG) {
+          fluid(maxWidth: 160) {
+            ...GatsbyImageSharpFluid
+          }
+          gatsbyImage(maxHeight: 160, layout: FLUID) {
             imageData
           }
         }
       }
       placeholderSvg: file(relativePath: { eq: "landscape.jpg" }) {
         childImageSharp {
+          fixed(width: 120) {
+            ...GatsbyImageSharpFixed_tracedSVG
+          }
           gatsbyImage(width: 120, layout: FIXED, placeholder: TRACED_SVG) {
             imageData
           }
@@ -67,6 +83,12 @@ export default function GatsbyImages() {
       }
       cropEntropy: file(relativePath: { eq: "landscape.jpg" }) {
         childImageSharp {
+          fixed (
+            height: 80,
+            cropFocus: ENTROPY
+          ) {
+            ...GatsbyImageSharpFixed_tracedSVG
+          }
           gatsbyImage(
             height: 80
             layout: FIXED
@@ -158,7 +180,7 @@ export default function GatsbyImages() {
         <img alt="Chameleon" height={200} src={ChameleonPortrait} />
       </div>
       <hr />
-      <TestCase
+        <TestCase
         title="Null image props"
         looksCorrect={true}
         notes="Nothing is expected to render, but a console warning does appear saying image prop is missing"
@@ -168,23 +190,27 @@ export default function GatsbyImages() {
       <h2>
         <pre>Fixed</pre>
       </h2>
-      <TestCase title="Fixed with width (120x___)" looksCorrect={true}>
+      <TestCase title="Fixed with width (120x___)" looksCorrect={false}>
         <GatsbyImage image={getImage(data.fixedWidth)} alt="chameleon" />
+        <Img fixed={data.fixedWidth.childImageSharp.fixed} alt="chameleon" />
       </TestCase>
-      <TestCase title="Fixed with height (___x80)" looksCorrect={true}>
+      <TestCase title="Fixed with height (___x80)" looksCorrect={false}>
         <GatsbyImage image={getImage(data.fixedHeight)} alt="chameleon" />
+        <Img fixed={data.fixedHeight.childImageSharp.fixed} alt="chameleon" />
       </TestCase>
       <h2>
         <pre>Fluid</pre>
       </h2>
-      <TestCase title="Fluid with maxWidth (240x___)" looksCorrect={true}>
-        <div style={{ width: 240 }}>
-          <GatsbyImage image={getImage(data.fluidWidth)} alt="chameleon" />
+      <TestCase title="Fluid with maxWidth (240x___)" looksCorrect={false} notes="Looks like cropFocus is different by default on legacy gatsby-image, maybe that's intentional?">
+        <div style={{ display: `grid`, gridTemplateColumns: `240px 240px` }}>
+            <GatsbyImage image={getImage(data.fluidWidth)} alt="chameleon" />
+            <Img fixed={data.fluidWidth.childImageSharp.fluid} alt="chameleon" />
         </div>
       </TestCase>
       <TestCase title="Fluid with maxHeight (___x160)" looksCorrect={true}>
-        <div style={{ width: 240 }}>
+        <div style={{ display: `grid`, gridTemplateColumns: `240px 240px` }}>
           <GatsbyImage image={getImage(data.fluidHeight)} alt="chameleon" />
+          <Img fixed={data.fluidHeight.childImageSharp.fluid} alt="chameleon" />
         </div>
       </TestCase>
       <h2>
@@ -192,9 +218,10 @@ export default function GatsbyImages() {
       </h2>
       <TestCase title="Placeholder SVG" looksCorrect={true}>
         <GatsbyImage image={getImage(data.placeholderSvg)} alt="chameleon" />
+        <Img fixed={data.placeholderSvg.childImageSharp.fixed} alt="chameleon" />
       </TestCase>
       <TestCase title="Placeholder Base64" looksCorrect={true}>
-        <GatsbyImage image={getImage(data.placeholder64)} alt="chameleon" />
+        <GatsbyImage image={getImage(data.placeholderBase64)} alt="chameleon" />
       </TestCase>
       <TestCase title="Placeholder Dominant Color" looksCorrect={true}>
         <GatsbyImage image={getImage(data.placeholderColor)} alt="chameleon" />
@@ -207,6 +234,7 @@ export default function GatsbyImages() {
       </h2>
       <TestCase title="Cropped entropy" looksCorrect={true}>
         <GatsbyImage image={getImage(data.cropEntropy)} alt="chameleon" />
+        <Img fixed={data.cropEntropy.childImageSharp.fixed} alt="chameleon" />
       </TestCase>
       <TestCase title="Cropped east" looksCorrect={true}>
         <GatsbyImage image={getImage(data.cropEast)} alt="chameleon" />
@@ -237,15 +265,15 @@ export default function GatsbyImages() {
         <pre>Quality</pre>
       </h2>
       <TestCase title="Quality low (5)" looksCorrect={true}>
-        <div style={{ width: 1200 }}>
+        <div style={{ width: 300 }}>
           <GatsbyImage image={getImage(data.qualityLow)} alt="chameleon" />
         </div>
       </TestCase>
       <TestCase title="Quality high (100)" looksCorrect={true}>
-        <div style={{ width: 1200 }}>
+        <div style={{ width: 300 }}>
           <GatsbyImage image={getImage(data.qualityHigh)} alt="chameleon" />
         </div>
-      </TestCase>
+      </TestCase>      
     </div>
   )
 }
