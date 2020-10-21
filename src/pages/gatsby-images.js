@@ -206,6 +206,22 @@ export default function GatsbyImages() {
       >
         <GatsbyImage image={null} alt="600x400" />
       </TestCase>
+      <TestCase
+        title="Eager loading"
+        looksCorrect={true}
+        notes="Image should load without js"
+      >
+        <GatsbyImage
+          image={getImage(data.fixedWidth)}
+          loading="eager"
+          alt="chameleon"
+        />
+        <Img
+          fixed={data.fixedWidth.childImageSharp.fixed}
+          loading="eager"
+          alt="chameleon"
+        />
+      </TestCase>
       <h2>
         <pre>Fixed</pre>
       </h2>
