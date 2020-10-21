@@ -1,9 +1,9 @@
-import React from "react"
-import { StaticImage } from "gatsby-plugin-image"
+import React from "react";
+import { StaticImage } from "gatsby-plugin-image";
 
-import TestCase from "../components/test-case"
-import ChameleonLandscape from "../img/landscape.jpg"
-import ChameleonPortrait from "../img/portrait.jpg"
+import TestCase from "../components/test-case";
+import ChameleonLandscape from "../img/landscape.jpg";
+import ChameleonPortrait from "../img/portrait.jpg";
 
 export default function StaticImages() {
   return (
@@ -16,8 +16,11 @@ export default function StaticImages() {
         <img alt="Chameleon" height={200} src={ChameleonLandscape} />
         <img alt="Chameleon" height={200} src={ChameleonPortrait} />
       </div>
-      <hr />
-      <TestCase title="No layout or size set (___x___)" notes="Nothing expected to render" looksCorrect={true}>
+      <TestCase
+        title="No layout or size set (___x___)"
+        notes="Nothing expected to render"
+        looksCorrect={true}
+      >
         <StaticImage src="../img/600x400.png" alt="600x400" />
       </TestCase>
       <h2>
@@ -57,7 +60,6 @@ export default function StaticImages() {
       <TestCase
         title="Fixed with width and height (150x100)"
         looksCorrect={true}
-        notes="Looks like height isn't set properly, width is getting set okay"
       >
         <StaticImage
           layout="fixed"
@@ -68,9 +70,92 @@ export default function StaticImages() {
         />
       </TestCase>
       <TestCase
+        title="Fixed with width and height (100x100) landscape fit=inside"
+        looksCorrect={true}
+      >
+        <StaticImage
+          layout="fixed"
+          width={100}
+          height={100}
+          fit="inside"
+          src="../img/600x400.png"
+          alt="600x400"
+        />
+        <StaticImage
+          layout="fixed"
+          width={100}
+          height={100}
+          fit="inside"
+          src="../img/landscape.jpg"
+          alt="600x400"
+        />
+      </TestCase>
+      <TestCase
+        title="Fixed with width and height (100x100) landscape fit=outside"
+        looksCorrect={true}
+      >
+        <StaticImage
+          layout="fixed"
+          width={100}
+          height={100}
+          fit="outside"
+          src="../img/600x400.png"
+          alt="600x400"
+        />
+        <StaticImage
+          layout="fixed"
+          width={100}
+          height={100}
+          fit="outside"
+          src="../img/landscape.jpg"
+          alt="600x400"
+        />
+      </TestCase>
+      <TestCase
+        title="Fixed with width and height (100x100) portrait fit=inside"
+        looksCorrect={true}
+      >
+        <StaticImage
+          layout="fixed"
+          width={100}
+          height={100}
+          fit="inside"
+          src="../img/400x600.png"
+          alt="400x600"
+        />
+        <StaticImage
+          layout="fixed"
+          width={100}
+          height={100}
+          fit="inside"
+          src="../img/portrait.jpg"
+          alt="400x600"
+        />
+      </TestCase>
+      <TestCase
+        title="Fixed with width and height (100x100) portrait fit=outside"
+        looksCorrect={true}
+      >
+        <StaticImage
+          layout="fixed"
+          width={100}
+          height={100}
+          fit="outside"
+          src="../img/400x600.png"
+          alt="400x600"
+        />
+        <StaticImage
+          layout="fixed"
+          width={100}
+          height={100}
+          fit="outside"
+          src="../img/portrait.jpg"
+          alt="400x600"
+        />
+      </TestCase>
+      <TestCase
         title="Fixed with height (___x100)/(___x50)"
         looksCorrect={true}
-        notes="Probably an issue in calculating sizes derived from the height incorrectly. Looks like the size is getting multipled by the aspect ratio."
       >
         <StaticImage
           layout="fixed"
@@ -86,5 +171,5 @@ export default function StaticImages() {
         />
       </TestCase>
     </div>
-  )
+  );
 }
