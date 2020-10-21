@@ -14,12 +14,12 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
-    "gatsby": "^2.24.79",
+    "gatsby": "static-image",
     "gatsby-image": "^2.4.21",
-    "gatsby-plugin-image": "^0.0.4",
-    "gatsby-plugin-sharp": "^2.6.43",
+    "gatsby-plugin-image": "static-image",
+    "gatsby-plugin-sharp": "static-image",
     "gatsby-source-filesystem": "^2.3.35",
-    "gatsby-transformer-sharp": "^2.5.19",
+    "gatsby-transformer-sharp": "static-image",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
