@@ -204,6 +204,13 @@ export default function GatsbyImages() {
         looksCorrect={true}
         notes="Nothing is expected to render, but a console warning does appear saying image prop is missing"
       >
+        <GatsbyImage image={getImage(data.new)} alt="400x600" />
+      </TestCase>
+      <TestCase
+        title="Null image props"
+        looksCorrect={true}
+        notes="Nothing is expected to render, but a console warning does appear saying image prop is missing"
+      >
         <GatsbyImage image={null} alt="600x400" />
       </TestCase>
       <TestCase
