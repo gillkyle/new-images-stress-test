@@ -14,7 +14,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
-    "gatsby": "static-image",
+    "gatsby": "^2.24.87",
     "gatsby-image": "^2.4.21",
     "gatsby-plugin-image": "static-image",
     "gatsby-plugin-sharp": "static-image",
